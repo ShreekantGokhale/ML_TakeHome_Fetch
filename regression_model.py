@@ -11,7 +11,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 
-
+# 2 linear layer deep model with ReLu activation functions
 class MultipleRegression(nn.Module):
     def __init__(self, num_features):
         super(MultipleRegression, self).__init__()

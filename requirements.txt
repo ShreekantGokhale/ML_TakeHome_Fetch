@@ -1,9 +1,0 @@
-numpy
-pandas
-seaborn
-tqdm
-matplotlib
-torch
-scikit-learn
-datetime
-gunicorn

@@ -22,34 +22,17 @@ def predict():
     For rendering results on HTML GUI
     '''
     int_features = [x.lower() for x in request.form.values()]
-    day_dict = prediction_input()    
+    day_dict = prediction_input()  #Constructing X variables for all the days in the year 2022
+    # for day_dict--> key: month name in lowercase; values: X values with 3 features for the {key} month    
     sum = 0
     for j in day_dict[int_features[0]]:
         final_features = torch.tensor(scaler.transform(np.array(j).reshape(1,-1)), dtype=torch.float32).to(device='cpu')
         b = model(final_features).detach().numpy()
         prediction = scaler1.inverse_transform(b.reshape(-1,1))
-        sum += int(prediction[0])
+        sum += int(prediction[0]) #Variable holds the total receipts for the requested month
 
-    return render_template('index.html', prediction_text='No. of receipts will be {}'.format(sum))
+    return render_template('index.html', prediction_text='No. of receipts scanned in the month of {} will be {}'.format(int_features[0],sum))
 
-@app.route('/predict_api',methods=['POST'])
-def predict_api():
-    '''
-    For direct API calls trought request
-    '''
-    data = request.get_json(force=True)
-    # prediction = model.predict([np.array(list(data.values()))])
-
-    # int_features = [int(x) for x in request.form.values()]
-    final_features = torch.tensor(scaler.transform(torch.tensor(data).reshape(-1,1)), dtype=torch.float32).to(device='cpu')
-
-    b = model(final_features).detach().numpy()
-    prediction = scaler1.inverse_transform(b.reshape(-1,1))
-
-    output = int(prediction[0])
-
-    # output = prediction[0]
-    return jsonify(output)
 
 if __name__ == "__main__":
     app.run(debug=True)

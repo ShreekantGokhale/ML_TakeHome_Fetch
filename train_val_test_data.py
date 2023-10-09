@@ -12,6 +12,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 
 
+#Creates a dataset that can be called in the data loader
 class RegressionDataset(Dataset):
     
     def __init__(self, X_data, y_data):
